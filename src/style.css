@@ -1,0 +1,165 @@
+#app{
+  font-family: 'Courier New',monospace;
+  background: #1a1a2e;
+  display: flex;
+  color:whitesmoke;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  overflow:hidden;
+}
+.ui {
+    display: flex;
+    justify-content: space-between;
+    width: 480px;
+}
+#grid{
+  height: 432px;
+  width: 480px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) inset,0 1px 0 #fff;
+  display: flex;
+  flex-wrap: wrap;
+  background: url('./assets/images/backgroundGame.png');
+  background-size: cover;
+  position: relative;
+  padding: 0;
+}
+#grid div {
+    height: 48px;
+    width: 48px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.link_going_left, .link_going_right, .link_going_down, .link_going_up {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    z-index: 10;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.link_going_left {
+    background-image: url('./assets//images/linkGoLeft.png')
+}
+
+.link_going_right {
+    background-image: url('./assets//images/linkGoRight.png')
+}
+
+.link_going_down {
+    background-image: url('./assets/images/linkDown.png')
+}
+
+.link_going_up {
+    background-image: url('./assets//images/linkUp.png')
+}
+
+.left_wall {
+    background-image: url('./assets/images/leftWall.png')
+}
+
+.top_wall {
+    background-image: url('./assets/images/topWall.png')
+}
+
+.bottom_wall {
+    background-image: url('./assets/images/bottomWall.png')
+}
+
+.right_wall {
+    background-image: url('./assets/images/rightWall.png')
+}
+
+.bottom_left_wall {
+    background-image: url('./assets/images/bottomLeftWall.png')
+}
+
+.bottom_right_wall {
+    background-image: url('./assets/images/bottomRightWall.png')
+}
+
+.top_left_wall {
+    background-image: url('./assets/images/topLeftWall.png')
+}
+
+.top_right_wall {
+    background-image: url('./assets/images/topRightWall.jpg')
+}
+
+.top_door {
+    background-image: url('./assets/images/topDoor.png')
+}
+
+.left_door {
+    background-image: url('./assets/images/leftDoor.png')
+}
+
+.stairs {
+    background-image: url('./assets/images/stairs.png')
+}
+
+.fire_pot {
+    background-image: url('./assets/images/firePot.png')
+}
+
+.lanterns {
+    background-image: url('./assets/images/lantern.png')
+}
+
+.slicer, .skeletor {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    z-index: 5;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.slicer  {
+    background-image: url('./assets/images/slicer.png')
+}
+
+.skeletor {
+    background-image: url('./assets/images/skeletor.png')
+}
+
+.kaboom {
+    background-image: url('./assets/images/boom.png');
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    z-index: 15;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    animation: explode 1s ease-out forwards;
+}
+
+@keyframes explode {
+    0% {
+        transform: scale(0.8);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.2);
+        opacity: 0;
+    }
+}
+
+#temp_message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 180px;
+    transform: translate(-50%, -50%);
+    padding: 15px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    z-index: 20;
+    pointer-events: none;
+    background: rgba(0,0,0,0.8);
+}
