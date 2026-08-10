@@ -42,11 +42,11 @@
     background-position: center;
 }
 .link_going_left {
-    background-image: url('./assets//images/linkGoLeft.png')
+    background-image: url('./assets/images/linkGoLeft.png')
 }
 
 .link_going_right {
-    background-image: url('./assets//images/linkGoRight.png')
+    background-image: url('./assets/images/linkGoRight.png')
 }
 
 .link_going_down {
@@ -54,7 +54,7 @@
 }
 
 .link_going_up {
-    background-image: url('./assets//images/linkUp.png')
+    background-image: url('./assets/images/linkUp.png')
 }
 
 .left_wall {
