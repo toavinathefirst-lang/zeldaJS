@@ -84,10 +84,13 @@ document.addEventListener('DOMContentLoaded',()=>{
                 break
             case 'down':
                 if (playerPosition + width < width * 9) newPosition = playerPosition + width
-                playerElement.className = 'link_going_down'
+                playerElement.className = 'link_going_down'//classList.add ici serait faux car les classe vont s ajouter 
                 playerDirection = 'down'
                 break
         }
+        playerPosition=newPosition
+        playerElement.style.left=`${(playerPosition%width) *tileSize}px`
+        playerElement.style.top=`${Math.floor(playerPosition/width) *tileSize}px`
     }
     function createSlicer(x,y){
         const slicerElement= document.createElement("div");
