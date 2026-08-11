@@ -48,12 +48,79 @@ document.addEventListener('DOMContentLoaded',()=>{
             'xddddddddz',
         ]
     ]
+    function createPlayer(){
+
+    }
     function createBoard(){
         gameRunning = true;
         grid.innerHTML="";
         squares.length=0;
-        enemies=[]
+        enemies=[];
+        const currentMap =maps[level]
         for (let i = 0; i < 9; i++) {
+            for(let j=0;j<10;j++){
+                const square = document.createElement('div');
+                square.setAttribute("id",i*width+j);
+
+                const char = currentMap[i][j];
+                addMapElement(square,char,j,i);
+
+
+                grid.appendChild(square)
+                squares.push(square)
+            }
+        }
+    }
+    createBoard()
+    /**
+     * @param {string} char 
+     * @param {HTMLDivElement} square 
+     * @param {number} x 
+     * @param {number} y 
+     */
+    function addMapElement(square,char,x,y){
+        switch (char) {
+            case 'a':
+                square.classList.add('left_wall')
+                break
+            case 'b':
+                square.classList.add('right_wall')
+                break
+            case 'c':
+                square.classList.add('top_wall')
+                break
+            case 'd':
+                square.classList.add('bottom_wall')
+                break
+            case 'w':
+                square.classList.add('top_right_wall')
+                break
+            case 'x':
+                square.classList.add('bottom_left_wall')
+                break
+            case 'y':
+                square.classList.add('top_left_wall')
+                break
+            case 'z':
+                square.classList.add('bottom_right_wall')
+                break
+            case '%':
+                square.classList.add('left_door')
+                break
+            case '^':
+                square.classList.add('top_door')
+                break
+            case '$':
+                square.classList.add('stairs')
+                break
+            case ')':
+                square.classList.add('lanterns')
+                break
+            case '(':
+                square.classList.add('fire_pot')
+                break
+            
+
         }
     }
 })
