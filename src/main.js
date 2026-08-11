@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded',()=>{
     const width = 10
     const tileSize = 48
 
+    /**
+     * @type {HTMLDivElement[]}
+     */
     const squares = []
     let score = 0
     let level = 0
@@ -60,6 +63,26 @@ document.addEventListener('DOMContentLoaded',()=>{
     }
     /**
      * 
+     * @param {number} position 
+     */
+    function canMoveTo(position){
+        if(position<0 || position >=squares.length) return false
+
+         const square =squares[position]
+
+        return !square.classList.contains("left_wall") &&
+            !square.classList.contains("right_wall") &&
+            !square.classList.contains("top_wall") &&
+            !square.classList.contains("bottom_wall") &&
+            !square.classList.contains("bottom_left_wall") &&
+            !square.classList.contains("bottom_right_wall") &&
+            !square.classList.contains("top_right_wall") &&
+            !square.classList.contains("top_left_wall") &&
+            !square.classList.contains("lanterns") &&
+            !square.classList.contains("fire_pot") 
+
+    }
+     /* 
      * @param {string} direction 
      */
     function movePlayer(direction){
@@ -88,9 +111,26 @@ document.addEventListener('DOMContentLoaded',()=>{
                 playerDirection = 'down'
                 break
         }
-        playerPosition=newPosition
-        playerElement.style.left=`${(playerPosition%width) *tileSize}px`
-        playerElement.style.top=`${Math.floor(playerPosition/width) *tileSize}px`
+
+        if(canMoveTo(newPosition)){
+            const square = squares[newPosition]
+            if(square.classList.contains("left_door")){
+                square.classList.remove("left_door")
+            }
+
+            if(square.classList.contains("top_door") || square.classList.contains('stairs')){
+                if(enemies.length === 0){
+                    //nextLevel()
+                }else {
+                    //showEnemiesRemainingMessage()
+                }
+                return
+            }
+            playerPosition=newPosition
+            playerElement.style.left=`${(playerPosition%width) *tileSize}px`
+            playerElement.style.top=`${Math.floor(playerPosition/width) *tileSize}px`
+        }
+       
     }
     function createSlicer(x,y){
         const slicerElement= document.createElement("div");
