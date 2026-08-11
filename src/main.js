@@ -112,6 +112,8 @@ document.addEventListener('DOMContentLoaded',()=>{
                 break
         }
 
+        
+        
         if(canMoveTo(newPosition)){
             const square = squares[newPosition]
             if(square.classList.contains("left_door")){
@@ -122,7 +124,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                 if(enemies.length === 0){
                     //nextLevel()
                 }else {
-                    //showEnemiesRemainingMessage()
+                    showEnemiesRemainingMessage()
                 }
                 return
             }
@@ -132,6 +134,50 @@ document.addEventListener('DOMContentLoaded',()=>{
         }
        
     }
+    function nextLevel(){
+            level=(level+1)%maps.length
+            createBoard()
+    }
+    function showEnemiesRemainingMessage() {
+        grid.style.filter=`hue-rotate(0deg) saturate(2) brightness(1.5)`;
+        grid.style.boxShadow ="0 0 20px red"
+
+        setTimeout(()=>{
+            grid.style.filter = '';
+            grid.style.boxShadow = '';
+
+        },300)
+
+        showTemporaryMessage("Defeat all enemies first!!!","red",2000);
+    }
+    /**
+     * 
+     * @param {string} message 
+     * @param {string} color 
+     * @param {number} duration 
+     */
+    function showTemporaryMessage(message,color,duration){
+        const existingMessage = document.getElementById('temp_message')
+        if (existingMessage) existingMessage.remove()
+
+        const messageElement = document.createElement("div");
+        messageElement.id ="temp_message"
+        messageElement.textContent = message
+        messageElement.style.color = color
+        grid.appendChild(messageElement)
+
+        setTimeout(()=>{
+            if(messageElement.parentNode){
+                messageElement.remove()
+            }
+        },duration)
+
+    }
+    /**
+     * 
+     * @param {number} x 
+     * @param {number} y 
+     */
     function createSlicer(x,y){
         const slicerElement= document.createElement("div");
         slicerElement.classList.add("slicer");
