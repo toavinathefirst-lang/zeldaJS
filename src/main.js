@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
     const squares = []
     let score = 0
-    let level = 1
+    let level = 0
     let playerPosition = 40
     let enemies = []
     let playerDirection = 'right'
@@ -57,6 +57,37 @@ document.addEventListener('DOMContentLoaded',()=>{
         playerElement.style.top = `${(playerPosition/width) * tileSize}px`
 
         grid.appendChild(playerElement);
+    }
+    /**
+     * 
+     * @param {string} direction 
+     */
+    function movePlayer(direction){
+        const playerElement = document.getElementById('player');
+        let newPosition = playerPosition;
+
+        switch(direction){
+            case 'left':
+                if (playerPosition % width !==0) newPosition = playerPosition -1
+                playerElement.className = 'link_going_left'
+                playerDirection = 'left'
+                break
+            case 'right':
+                if (playerPosition % width !== width-1) newPosition = playerPosition +1
+                playerElement.className = 'link_going_right'
+                playerDirection = 'right'
+                break
+            case 'up':
+                if (playerPosition - width >=0) newPosition = playerPosition - width
+                playerElement.className = 'link_going_up'
+                playerDirection = 'up'
+                break
+            case 'down':
+                if (playerPosition + width < width * 9) newPosition = playerPosition + width
+                playerElement.className = 'link_going_down'
+                playerDirection = 'down'
+                break
+        }
     }
     function createSlicer(x,y){
         const slicerElement= document.createElement("div");
@@ -170,5 +201,36 @@ document.addEventListener('DOMContentLoaded',()=>{
 
         }
     }
+    document.addEventListener("keydown",(e)=>{
+        if(!gameRunning) return
+
+        switch (e.code) {
+            case "ArrowLeft":
+                e.preventDefault()
+                movePlayer("left")
+                
+                break;
+            case "ArrowRight":
+                e.preventDefault()
+                movePlayer("right")
+                
+                break;
+            case "ArrowUp":
+                e.preventDefault()
+                movePlayer("up")
+                
+                break;
+            case "ArrowDown":
+                e.preventDefault()
+                movePlayer("down")
+                
+                break;
+            case "Space":
+               // spawnKaboom()
+               break;
+        
+            
+        }
+    })
 })
 
