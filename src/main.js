@@ -51,6 +51,69 @@ document.addEventListener('DOMContentLoaded',()=>{
             'xddddddddz',
         ]
     ]
+    
+    function spawnKaboom() {
+        let kaboomX = playerPosition % width
+        let kaboomY = Math.floor(playerPosition/ width)
+
+        switch(playerDirection) {
+            case 'left':
+                kaboomX -= 1
+                break
+            case 'right':
+                kaboomX += 1
+                break
+            case 'up':
+                kaboomY -= 1
+                break
+            case 'down':
+                kaboomY += 1
+                break
+        }
+
+        if (kaboomX >= 0 && kaboomX < width && kaboomY >= 0 && kaboomY < 9) {
+            const kaboomElement = document.createElement('div')
+            kaboomElement.className = 'kaboom'
+            kaboomElement.style.left = `${kaboomX * tileSize}px`
+            kaboomElement.style.top = `${kaboomY * tileSize}px`
+            grid.appendChild(kaboomElement)
+
+            checkKaboomEnemyCollision(kaboomX, kaboomY)
+
+            setTimeout(() => {
+                if (kaboomElement.parentNode) {
+                    kaboomElement.parentNode.removeChild(kaboomElement)
+                }
+            }, 1000)
+        }
+    }
+    /**
+     * @param {number} enemyX 
+     * @param {number} enemyY 
+     */
+    function checkKaboomEnemyCollision(kaboomX,kaboomY){
+        for(let i=enemies.length-1;i>=0;i--){
+            const enemy = enemies[i];
+            const enemyX = Math.round(enemy.x);
+            const enemyY = Math.round(enemy.y)
+
+            if (enemyX === kaboomX && enemyY === kaboomY) {
+                if(enemy.element.parentNode){
+                     enemy.element.parentNode.removeChild(enemy.element)
+                }
+                enemies.splice(i, 1)
+                score++
+                updateDisplay()
+                break
+            }
+        }
+    }
+    function updateDisplay(){
+        scoreDisplay.innerHTML =score
+        levelDisplay.innerHTML=level+1
+        enemyDisplay.innerHTML=enemies.length
+    }
+
     function createPlayer(){
         const playerElement=document.createElement("div");
         playerElement.className = "link_going_right";
@@ -122,7 +185,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
             if(square.classList.contains("top_door") || square.classList.contains('stairs')){
                 if(enemies.length === 0){
-                    //nextLevel()
+                    nextLevel()
                 }else {
                     showEnemiesRemainingMessage()
                 }
@@ -188,7 +251,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             y,
             direction:-1,
             type:'slicer',
-            slicerElement
+            element:slicerElement
         }
         enemies.push(slicer)
         grid.appendChild(slicerElement)
@@ -315,7 +378,7 @@ document.addEventListener('DOMContentLoaded',()=>{
                 
                 break;
             case "Space":
-               // spawnKaboom()
+                spawnKaboom()
                break;
         
             
