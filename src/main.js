@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
     const squares = []
     let score = 0
-    let level = 0
+    let level = 1
     let playerPosition = 40
     let enemies = []
     let playerDirection = 'right'
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             'yccccccccw',
             'a        b',
             ')        )',
-            'a        b',
+            'a   *    b',
             'a        b',
             'a    $   b',
             ')   }    )',
@@ -57,6 +57,24 @@ document.addEventListener('DOMContentLoaded',()=>{
         playerElement.style.top = `${(playerPosition/width) * tileSize}px`
 
         grid.appendChild(playerElement);
+    }
+    function createSlicer(x,y){
+        const slicerElement= document.createElement("div");
+        slicerElement.classList.add("slicer");
+        slicerElement.style.left = `${x*tileSize}px`
+        slicerElement.style.top  = `${y*tileSize}px`
+
+        grid.appendChild(slicerElement)
+
+    }
+    function createSkeletor(x,y){
+        const skeletorElement= document.createElement("div");
+        skeletorElement.classList.add("skeletor");
+        skeletorElement.style.left = `${x*tileSize}px`
+        skeletorElement.style.top  = `${y*tileSize}px`
+
+        grid.appendChild(skeletorElement)
+
     }
     function createBoard(){
         gameRunning = true;
@@ -126,6 +144,12 @@ document.addEventListener('DOMContentLoaded',()=>{
                 break
             case '(':
                 square.classList.add('fire_pot')
+                break
+            case '*':
+                createSlicer(x,y)
+                break;
+            case '}':
+                createSkeletor(x,y)
                 break
             
 
