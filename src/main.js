@@ -63,7 +63,14 @@ document.addEventListener('DOMContentLoaded',()=>{
         slicerElement.classList.add("slicer");
         slicerElement.style.left = `${x*tileSize}px`
         slicerElement.style.top  = `${y*tileSize}px`
-
+        const slicer ={
+            x,
+            y,
+            direction:-1,
+            type:'slicer',
+            slicerElement
+        }
+        enemies.push(slicer)
         grid.appendChild(slicerElement)
 
     }
@@ -73,6 +80,14 @@ document.addEventListener('DOMContentLoaded',()=>{
         skeletorElement.style.left = `${x*tileSize}px`
         skeletorElement.style.top  = `${y*tileSize}px`
 
+        const skeletor = {
+            x,y,
+            direction:-1,
+            time:Math.random() *5,//minuteur de 0 a 5s
+            type: 'skeletor',
+            element: skeletorElement
+        }
+        enemies.push(skeletor)
         grid.appendChild(skeletorElement)
 
     }
