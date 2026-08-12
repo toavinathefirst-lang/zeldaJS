@@ -295,7 +295,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         }
         createPlayer()
     }
-    createBoard()
+    
     function moveSlicer(slicer,deltaTime){
         const speed =2*deltaTime;
         const newX = slicer.x +(slicer.direction * speed)
@@ -449,7 +449,19 @@ document.addEventListener('DOMContentLoaded',()=>{
         }
     })
     function checkPlayerEnemyCollision(){
+        const playerX = playerPosition %width
+        const playerY = Math.floor(playerPosition /width)
 
+        for(const enemy of enemies){
+            const enemyX = Math.round(enemy.x)
+            const enemyY = Math.round(enemy.y)
+
+            if (enemyX === playerX && enemyY === playerY) {
+                gameOver()
+                return
+            }
+        }
+    
     }
     let lastTime =0
     let animationId
@@ -458,7 +470,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         lastTime=currentTime
         if(gameRunning && deltaTime <0.1){
             moveEnemies(deltaTime)
-            //checkPlayerEnemyCollision()
+            checkPlayerEnemyCollision()
             
         }
         animationId=requestAnimationFrame(gameLoop)
@@ -468,6 +480,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
         showTemporaryMessage(`GameOver! Final Score:${score}`,"white",3000)
     }
+    createBoard()
      animationId = requestAnimationFrame(gameLoop)
 })
 
