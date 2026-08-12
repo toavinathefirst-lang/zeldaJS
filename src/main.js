@@ -266,7 +266,7 @@ document.addEventListener('DOMContentLoaded',()=>{
         const skeletor = {
             x,y,
             direction:-1,
-            time:Math.random() *5,//minuteur de 0 a 5s
+            timer:Math.random() *5,//minuteur de 0 a 5s
             type: 'skeletor',
             element: skeletorElement
         }
@@ -296,6 +296,70 @@ document.addEventListener('DOMContentLoaded',()=>{
         createPlayer()
     }
     createBoard()
+    function moveSlicer(slicer,deltaTime){
+        const speed =2*deltaTime;
+        const newX = slicer.x +(slicer.direction * speed)
+        const y= Math.round(slicer.y)
+
+        if (newX <0 || newX >=width || isWall(Math.round(newX),y)){
+            slicer.direction *= -1
+        }else {
+            slicer.x=newX
+        }
+        slicer.element.style.left=`${slicer.x * tileSize}px`
+    }
+    function moveEnemies(deltaTime) {
+        for (const enemy of enemies) {
+            if (enemy.type === 'slicer') {
+                moveSlicer(enemy, deltaTime)
+            } else if (enemy.type === 'skeletor') {
+                moveSkeletor(enemy, deltaTime)
+            }
+        }
+    }
+    /**
+     * @param {number} deltaTime 
+     */
+    function moveSkeletor(skeletor,deltaTime){
+        const speed =1.5*deltaTime;
+        skeletor.timer -= deltaTime
+       if(skeletor.timer <=0){
+        skeletor.direction *= -1;
+        skeletor.timer = Math.random() *5
+       }
+
+       const newY = skeletor.y + (skeletor.direction * speed)
+    const x = Math.round(skeletor.x)
+
+        if (newY < 0 || newY >= 9 || isWall(x, Math.round(newY))) {
+            skeletor.direction *= -1
+        } else {
+            skeletor.y = newY
+        }
+        skeletor.element.style.top = `${skeletor.y * tileSize}px`
+    }
+
+    /**
+     * 
+     * @param {number} x 
+     * @param {number} y 
+     */
+    function isWall(x,y){
+        const position = y *width +x;
+        if(position<0 || position > squares.length) return true
+
+        const square = squares[position]
+        return  square.classList.contains("left_wall") ||
+            square.classList.contains("right_wall") ||
+            square.classList.contains("top_wall") ||
+            square.classList.contains("bottom_wall") ||
+            square.classList.contains("bottom_left_wall") ||
+            square.classList.contains("bottom_right_wall") ||
+            square.classList.contains("top_right_wall") ||
+            square.classList.contains("top_left_wall") ||
+            square.classList.contains("lanterns") ||
+            square.classList.contains("fire_pot") 
+    }
     /**
      * @param {string} char 
      * @param {HTMLDivElement} square 
@@ -384,5 +448,26 @@ document.addEventListener('DOMContentLoaded',()=>{
             
         }
     })
+    function checkPlayerEnemyCollision(){
+
+    }
+    let lastTime =0
+    let animationId
+    function gameLoop(currentTime){
+        const deltaTime = (currentTime -lastTime) /1000
+        lastTime=currentTime
+        if(gameRunning && deltaTime <0.1){
+            moveEnemies(deltaTime)
+            //checkPlayerEnemyCollision()
+            
+        }
+        animationId=requestAnimationFrame(gameLoop)
+    }
+    function gameOver(){
+        gameRunning=false
+
+        showTemporaryMessage(`GameOver! Final Score:${score}`,"white",3000)
+    }
+     animationId = requestAnimationFrame(gameLoop)
 })
 
