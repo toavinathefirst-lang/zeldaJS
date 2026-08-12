@@ -194,6 +194,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             playerPosition=newPosition
             playerElement.style.left=`${(playerPosition%width) *tileSize}px`
             playerElement.style.top=`${Math.floor(playerPosition/width) *tileSize}px`
+            checkPlayerEnemyCollision()
         }
        
     }
@@ -294,6 +295,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             }
         }
         createPlayer()
+        updateDisplay()
     }
     
     function moveSlicer(slicer,deltaTime){
@@ -346,7 +348,7 @@ document.addEventListener('DOMContentLoaded',()=>{
      */
     function isWall(x,y){
         const position = y *width +x;
-        if(position<0 || position > squares.length) return true
+        if(position<0 || position >= squares.length) return true
 
         const square = squares[position]
         return  square.classList.contains("left_wall") ||
